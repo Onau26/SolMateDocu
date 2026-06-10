@@ -1,0 +1,1 @@
+	 tail -f -n 100 /var/log/sun2plug/invertercontrol.log
