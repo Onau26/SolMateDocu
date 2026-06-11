@@ -43,7 +43,7 @@ Please refer to PCM Status flags
 | 2   | LED Driver         | I2C communication with ISSI LED driver was not possible |
 
 ## 3.3 FEATURE DESCRIPTION 
-### 3.3.1 Systemof/off 
+### 3.3.1 System on/off 
 
 The SolMate will be power on/off using the UI button.
 
