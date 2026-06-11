@@ -15,5 +15,7 @@ connect to SM via ssh
 disconnect from SM
 
 	scp pi@192.168.0.yyy:/var/output_YYYY-MM-DD_YYYY-MM-DD.db sun2plug_xxx.db   
+
 or
+
 	scp pi@192.168.xxx.xxx:/usr/lib/sun2plug/tests/output_YYYY-MM-DD_YYYY-MM-DD.db sun2plug_xxx.db   

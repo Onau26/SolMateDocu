@@ -15,7 +15,6 @@ The offgrid inverter manufactured by Yuco provides a local 230Vac voltage source
 | Operating Temperature | T<sub>op</sub>    |     | 80   |      | °C   |
 | Efficiency            | 𝜂                |     | 90   |      | %    |
 
-
 ## 7.2 COMMUNICATION
 Because of the missing communication channel of the Offgrid, there is no communication between the Inverter and the PCM. 
 
@@ -23,7 +22,7 @@ Because of the missing communication channel of the Offgrid, there is no communi
 ### 7.3.1 On/Off Control
 The inverter turns on or off when the two wires, which are normally connected to manual switch, are shorted together. This essentially connects the 48V from the input to the supply of the inverter logic which in turn start to operate. 
 The PCM is responsible for turning the inverter on or off in dependence on the current state of the CAM switch and the current operation status. 
-<div class="page-break" style="page-break-before: always;"></div>
+
 
 ### 7.3.2 Current Protection
 Additional to the inbuild protection mechanism of the inverter, the PCM also checks for malfunctions or power limits. 

@@ -3,24 +3,24 @@
 
 The MPPT in the SolMate system is used for power conversion and steps up the DC-input voltage of the PV panels to a higher voltage needed to charge a battery. The new MPPT consists of two individual inputs with two phase each, leading to a total of 4 phases. Each phase consists of one synchronous boost converter capable of an output power of around 300W. For switching, Gallium Nitride High Electron Mobility Transistors (GaN HEMTs) are used which allow to increase the power density while maintaining industry leading efficiency.
 
-![[MPPT PCB.png|354]]
+![MPPT](MPPT_PCB.png) 
+
 ## 2.1 ELECTRICAL CHARACTERISTICS 
 
-| Parameter                 | Symbol                 | Min | Typ | Max       | Unit |     |
-| :------------------------ | :--------------------- | :-- | :-- | :-------- | :--- | --- |
-| Input Voltage             | V<sub>in</sub>         | 6   | 32  | 65 <sup>1 | V    |     |
-| Output Voltage            | V<sub>out</sub>        |     | 48  | 60        | V    |     |
-| Input Current (per Phase) | I<sub>in</sub> (Phase) | 0   |     | 20        | A    |     |
-| Input Current (total)     | I<sub>ln</sub> max     | 0   |     | 40 <sup>2 | A    |     |
-| Output Current            | I<sub>out</sub>        | 0   |     | 28        | A    |     |
-| Operating Temperature     | T<sub>op</sub>         | -20 |     | 100       | °C   |     |
-| Efficiency                | 𝜂                     |     |     | 98        | %    |     |
-| Switching Frequency       | fsw                    |     | 500 |           | kHz  |     |
-| FAN Voltage               | V<sub>FAN</sub>        |     | 5   |           | V    |     |
+| Parameter                 | Symbol                 | Min | Typ | Max       | Unit |
+| :------------------------ | :--------------------- | :-- | :-- | :-------- | :--- |
+| Input Voltage             | V<sub>in</sub>         | 6   | 32  | 65 <sup>1 | V    |
+| Output Voltage            | V<sub>out</sub>        |     | 48  | 60        | V    |
+| Input Current (per Phase) | I<sub>in</sub> (Phase) | 0   |     | 20        | A    |
+| Input Current (total)     | I<sub>ln</sub> max     | 0   |     | 40 <sup>2 | A    |
+| Output Current            | I<sub>out</sub>        | 0   |     | 28        | A    |
+| Operating Temperature     | T<sub>op</sub>         | -20 |     | 100       | °C   |
+| Efficiency                | 𝜂                     |     |     | 98        | %    |
+| Switching Frequency       | fsw                    |     | 500 |           | kHz  |
+| FAN Voltage               | V<sub>FAN</sub>        |     | 5   |           | V    |
+
 <sup>1</sup> Maximum voltage which can be handled by Hardware, the overall input voltage must not exceed battery voltage.  
 <sup>2</sup> May be limited due to thermal limitations.
-
-<div class="page-break" style="page-break-before: always;"></div>
 
 ## 2.2 COMMUNICATION 
 
@@ -50,7 +50,6 @@ The Status and Error fields are containing bits which give more information abou
 | 4   | Smart Charging           | The MPPT has reduced charge current since the battery is reaching 100%           |
 | 5   | Low Battery Derating     | he stack voltage of the battery is very low → charging current is reduced        |
 | 6   | Low Temperature Derating | The temperature of the battery is very low → charging current is reduced         |
-<div class="page-break" style="page-break-before: always;"></div>
 
 ### 2.2.2 Error Byte Bit Description
 
@@ -61,6 +60,7 @@ The Status and Error fields are containing bits which give more information abou
 | 2   | Overvoltage       | The maximum allowed input voltage has been exceeded      |
 | 3   | Overcurrent       | The maximum allowed input current has been exceeded      |
 | 4   | Reverse Polarity  | The input polarity is in reverse                         |
+
 
 **Note:** Every error condition leads to the MPP shutting down and halting operation until error condition is removed and the system has been restarted. 
 
@@ -73,7 +73,7 @@ The MPPT has two separate inputs which allows to connect two separate strings of
 ### 2.3.2 MPP Tracking 
 The MPP tries to find the maximum power point at the DC-input side by constantly varying the input current and observing the resulting input power. The algorithm is shown below. 
 
-![[MPPT Tracking.png|518]]
+![MPPT Tracking](MPPT_Tracking.png)
 
 
 For most of the PV panels, the maximum power point is around 31V.
@@ -87,7 +87,6 @@ To protect the MPPT against thermal overload, input current foldback has been im
 
 ### 2.3.4 Overcurrent Protection 
 Each individual phase has its own overcurrent protection implemented in hardware. This turns off the MPPT in case of shorts at the input or the output and protects the MPPT from damage.
-<div class="page-break" style="page-break-before: always;"></div>
 
 ### 2.3.5 Fan Control 
 The MPPT has the control over its own fan, can set the speed via PWM as well as measure the speed. The fans will be controlled in dependence of the temperature of the device.
@@ -99,7 +98,7 @@ The battery is interpreted as full and the MPPT is disabled when the output curr
 
 <sup>3</sup> The minimum output current is 0.2A 
 
-![[Charging Strategy.png|621]]
+![Charging Stategy](Charging_Strategy.png)
 
 The battery full state is exited according to this state diagram. 
 This charging strategy gives the cells more time to balance when the battery is nearly full and prevents the battery from being overcharged. Additionally, there is a small hysteresis when the battery is full and stops charging before the MPPT resumes normal operation. 

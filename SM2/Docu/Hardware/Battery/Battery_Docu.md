@@ -1,6 +1,6 @@
 # 5 BATTERY
 The battery is the main storage component in the SolMate system and has a rated capacity of 25Ah or 30Ah. Main supplier will be Topband Batteries. 
-![[Topband Battery.png|345]]
+![Topband Battery](Topband_Battery.png)
 
 ## 5.1 ELECTRICAL CHARACTERISTICS 
 For detailed information about the electrical characteristics and communication capabilities, please refer to the datasheet of the individual battery. 
@@ -18,7 +18,6 @@ For the physical layer RS485 is used. On top of this Layer Modbus RTU is impleme
 | Current          | A    | Battery Current                        |
 | Charge           | mAh  | Current state of charge                |
 | NMOS Temperature | °C   | Temperature of the ON/OFF Transistors  |
-<div class="page-break" style="page-break-before: always;"></div>
 
 ## 5.3 FEATURE DESCRIPTION 
 ### 5.3.1 Waking up / entering sleep mode
