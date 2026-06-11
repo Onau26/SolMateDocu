@@ -7,21 +7,19 @@ The MPPT in the SolMate system is used for power conversion and steps up the DC-
 
 ## 2.1 ELECTRICAL CHARACTERISTICS 
 
-| Parameter                 | Symbol                 | Min | Typ | Max       | Unit |     |
-| :------------------------ | :--------------------- | :-- | :-- | :-------- | :--- | --- |
-| Input Voltage             | V<sub>in</sub>         | 6   | 32  | 65 <sup>1 | V    |     |
-| Output Voltage            | V<sub>out</sub>        |     | 48  | 60        | V    |     |
-| Input Current (per Phase) | I<sub>in</sub> (Phase) | 0   |     | 20        | A    |     |
-| Input Current (total)     | I<sub>ln</sub> max     | 0   |     | 40 <sup>2 | A    |     |
-| Output Current            | I<sub>out</sub>        | 0   |     | 28        | A    |     |
-| Operating Temperature     | T<sub>op</sub>         | -20 |     | 100       | °C   |     |
-| Efficiency                | 𝜂                     |     |     | 98        | %    |     |
-| Switching Frequency       | fsw                    |     | 500 |           | kHz  |     |
-| FAN Voltage               | V<sub>FAN</sub>        |     | 5   |           | V    |     |
+| Parameter                 | Symbol                 | Min | Typ | Max       | Unit |
+| :------------------------ | :--------------------- | :-- | :-- | :-------- | :--- |
+| Input Voltage             | V<sub>in</sub>         | 6   | 32  | 65 <sup>1 | V    |
+| Output Voltage            | V<sub>out</sub>        |     | 48  | 60        | V    |
+| Input Current (per Phase) | I<sub>in</sub> (Phase) | 0   |     | 20        | A    |
+| Input Current (total)     | I<sub>ln</sub> max     | 0   |     | 40 <sup>2 | A    |
+| Output Current            | I<sub>out</sub>        | 0   |     | 28        | A    |
+| Operating Temperature     | T<sub>op</sub>         | -20 |     | 100       | °C   |
+| Efficiency                | 𝜂                     |     |     | 98        | %    |
+| Switching Frequency       | fsw                    |     | 500 |           | kHz  |
+| FAN Voltage               | V<sub>FAN</sub>        |     | 5   |           | V    |
 <sup>1</sup> Maximum voltage which can be handled by Hardware, the overall input voltage must not exceed battery voltage.  
 <sup>2</sup> May be limited due to thermal limitations.
-
-<div class="page-break" style="page-break-before: always;"></div>
 
 ## 2.2 COMMUNICATION 
 
@@ -51,8 +49,6 @@ The Status and Error fields are containing bits which give more information abou
 | 4   | Smart Charging           | The MPPT has reduced charge current since the battery is reaching 100%           |
 | 5   | Low Battery Derating     | he stack voltage of the battery is very low → charging current is reduced        |
 | 6   | Low Temperature Derating | The temperature of the battery is very low → charging current is reduced         |
-<div class="page-break" style="page-break-before: always;"></div>
-
 ### 2.2.2 Error Byte Bit Description
 
 | Bit |                   | Description                                              |
@@ -88,7 +84,6 @@ To protect the MPPT against thermal overload, input current foldback has been im
 
 ### 2.3.4 Overcurrent Protection 
 Each individual phase has its own overcurrent protection implemented in hardware. This turns off the MPPT in case of shorts at the input or the output and protects the MPPT from damage.
-<div class="page-break" style="page-break-before: always;"></div>
 
 ### 2.3.5 Fan Control 
 The MPPT has the control over its own fan, can set the speed via PWM as well as measure the speed. The fans will be controlled in dependence of the temperature of the device.
