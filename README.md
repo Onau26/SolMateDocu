@@ -3,6 +3,9 @@ Public Solmate Documentation Testing for Github Pages
 
 # Overview
 
+
+
+
 ### Hardware
 [Battery](./SM2/Docu/Hardware/Battery/Battery_Docu.md) 
 
