@@ -8,17 +8,26 @@
 #### Edit wpa_supplicant.conf to match the customers (or previously found) WiFi credentials (don't forget Country-Code)
 
 ctrl_interface=DIR=/var/run/wpa_supplicant GROUP=netdev
+
 update_config=1
+
 country=AT
+
 network={
+
   ssid="Wartung"
+  
   psk="uHR24wSnmx"
+  
 }
+
 #<begin_rpiwifi_entry>
 network={
         ssid="customers SSID"
         psk="customers password"
+        
 }
+
 
 #<end_rpiwifi_entry>
 #<begin_rpiwifi_entry>
