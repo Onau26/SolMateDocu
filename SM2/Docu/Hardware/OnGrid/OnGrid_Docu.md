@@ -2,7 +2,7 @@
 The grid-tie inverter will be sourced from Envertech (EVT800) with a custom firmware so output power can be adjusted via a communication interface.
 Since the communication interface of the EVT800 uses UART, a custom PCB will be added which handles protocol and physical layer translation. 
 
-![[Ongrid PCB.png|535]]
+![[Ongrid_PCB.png|535]]
 
 ## 6.1 ELECTRICAL CHARACTERISTICS
 
@@ -57,4 +57,4 @@ Note: Every error condition leads to the Inverter shutting down and halting oper
 To optimize battery life and use the available capacity as best as possible, a control algorithm for the on-grid inverter das been developed which assures that the battery is never used outside its rated specifications. This is done by artificially limiting the voltage window in which the inverter is allowed to operate.
 When the battery reached its floating charge voltage and the on-grid inverter is enabled, the charging current into the battery will be limited to 0 A which is done by injecting the excess current produced by the MPPT into the grid.
 
-![[Injection Control.png|540]]
+![[Injection_Control.png|540]]
