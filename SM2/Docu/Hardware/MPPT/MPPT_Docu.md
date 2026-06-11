@@ -18,6 +18,7 @@ The MPPT in the SolMate system is used for power conversion and steps up the DC-
 | Efficiency                | 𝜂                     |     |     | 98        | %    |
 | Switching Frequency       | fsw                    |     | 500 |           | kHz  |
 | FAN Voltage               | V<sub>FAN</sub>        |     | 5   |           | V    |
+
 <sup>1</sup> Maximum voltage which can be handled by Hardware, the overall input voltage must not exceed battery voltage.  
 <sup>2</sup> May be limited due to thermal limitations.
 
@@ -49,6 +50,7 @@ The Status and Error fields are containing bits which give more information abou
 | 4   | Smart Charging           | The MPPT has reduced charge current since the battery is reaching 100%           |
 | 5   | Low Battery Derating     | he stack voltage of the battery is very low → charging current is reduced        |
 | 6   | Low Temperature Derating | The temperature of the battery is very low → charging current is reduced         |
+
 ### 2.2.2 Error Byte Bit Description
 
 | Bit |                   | Description                                              |
@@ -58,6 +60,7 @@ The Status and Error fields are containing bits which give more information abou
 | 2   | Overvoltage       | The maximum allowed input voltage has been exceeded      |
 | 3   | Overcurrent       | The maximum allowed input current has been exceeded      |
 | 4   | Reverse Polarity  | The input polarity is in reverse                         |
+
 
 **Note:** Every error condition leads to the MPP shutting down and halting operation until error condition is removed and the system has been restarted. 
 
