@@ -2,7 +2,7 @@
 The Power Control Module is the main component in the new SolMate system and replaces the netD PCB used in previous versions.
 The PCM is responsible for controlling all components present in the system including MPPT, UI, Ongrid, Offgrid and the Battery as well as communication with the Raspberry Pi. The netD technology is now also embedded onto this PCB. 
 
-![[PCM_PCB.png|508]]
+![PCM PCB](PCM_PCB.png)
 ## 4.1 ELECTRICAL CHARACTERISTICS 
 
 | Parameter                  | Symbol               | Min | Typ | Max  | Unit |

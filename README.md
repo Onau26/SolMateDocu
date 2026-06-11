@@ -5,13 +5,13 @@ Public Solmate Documentation Testing for Github Pages
 
 
 
-| Hardware                                                                 | Sofware                                                                          | Service                                                             |
-| ------------------------------------------------------------------------ | -------------------------------------------------------------------------------- | ------------------------------------------------------------------- |
-| [Battery](./SM2/Docu/Hardware/Battery/Battery_Docu.md)                   | [Consol Commands](./SM2/Docu/Software/Linux-Commands/Consol_Command_Overview.md) | Analysis Results                                                    |
-| [Cable Harness](./SM2/Docu/Hardware/Cable-Harness/Cable-Harness_Docu.md) |                                                                                  | [Known Issuse](./SM2/Service/Known_Issues/Known_Issues_Overview.md) |
-| [MPPT](./SM2/Docu/Hardware/MPPT/MPPT_Docu.md)                            |                                                                                  | Observations                                                        |
-| [OffGrid](./SM2/Docu/Hardware/OffGrid/OffGrid_Docu.md)                   |                                                                                  | Solutions                                                           |
-| [OnGrid](./SM2/Docu/Hardware/OnGrid/OnGrid_Docu.md)                      |                                                                                  |                                                                     |
-| [PCM](./SM2/Docu/Hardware/PCM/PCM_Docu.md)                               |                                                                                  |                                                                     |
-| [UI](./SM2/Docu/Hardware/UI/UI_Docu.md)                                  |                                                                                  |                                                                     |
+| Hardware                                                                 | Software                                                                           | Service                                                                         |
+| ------------------------------------------------------------------------ | ---------------------------------------------------------------------------------- | ------------------------------------------------------------------------------- |
+| [Battery](./SM2/Docu/Hardware/Battery/Battery_Docu.md)                   | [Console Commands](./SM2/Docu/Software/Linux-Commands/Console_Command_Overview.md) | [Analysis Results](./SM2/Service/Analysis_Results/Analysis_Results_Overview.md) |
+| [Cable Harness](./SM2/Docu/Hardware/Cable-Harness/Cable-Harness_Docu.md) |                                                                                    | [Known Issuse](./SM2/Service/Known_Issues/Known_Issues_Overview.md)             |
+| [MPPT](./SM2/Docu/Hardware/MPPT/MPPT_Docu.md)                            |                                                                                    | [Observation](./SM2/Service/Observation/Observations_Overview.md)               |
+| [OffGrid](./SM2/Docu/Hardware/OffGrid/OffGrid_Docu.md)                   |                                                                                    | [Solutions](./SM2/Service/Solutions/Solutions_Overview.md)                      |
+| [OnGrid](./SM2/Docu/Hardware/OnGrid/OnGrid_Docu.md)                      |                                                                                    |                                                                                 |
+| [PCM](./SM2/Docu/Hardware/PCM/PCM_Docu.md)                               |                                                                                    |                                                                                 |
+| [UI](./SM2/Docu/Hardware/UI/UI_Docu.md)                                  |                                                                                    |                                                                                 |
 
