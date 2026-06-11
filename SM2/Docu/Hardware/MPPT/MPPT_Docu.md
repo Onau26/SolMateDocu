@@ -3,8 +3,8 @@
 
 The MPPT in the SolMate system is used for power conversion and steps up the DC-input voltage of the PV panels to a higher voltage needed to charge a battery. The new MPPT consists of two individual inputs with two phase each, leading to a total of 4 phases. Each phase consists of one synchronous boost converter capable of an output power of around 300W. For switching, Gallium Nitride High Electron Mobility Transistors (GaN HEMTs) are used which allow to increase the power density while maintaining industry leading efficiency.
 
-<img src="Docu/Images/MPPT_PCB.png" alt="hi" class="inline"/>
-## 2.1 ELECTRICAL CHARACTERISTICS 
+![MPPT](Docu/Images/MPPT_PCB.png) 
+## 2M.1 ELECTRICAL CHARACTERISTICS 
 
 | Parameter                 | Symbol                 | Min | Typ | Max       | Unit |     |
 | :------------------------ | :--------------------- | :-- | :-- | :-------- | :--- | --- |
