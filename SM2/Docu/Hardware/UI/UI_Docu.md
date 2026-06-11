@@ -15,7 +15,6 @@ The UI is now also able to display error and warning codes which should help the
 | ------------------------ | ----------------- | --- | --- | ---- | ---- |
 | Input Voltage            | V<sub>in</sub>    |     | 3.3 |      | V    |
 | Sensor Temperature Range | T<sub>sense</sub> | -55 |     | +125 | °C   |
-<div class="page-break" style="page-break-before: always;"></div>
 
 ## 3.2 COMMUNICATION 
 
@@ -28,6 +27,7 @@ The following parameters can be written/read using this communication.
 | ----------- | ---- | ------------------- |
 | Error       |      | Indicates errors    |
 | Temperature | °C   | Ambient temperature |
+
 The Status and Error fields are containing bits which give more information about the system. 
 
 ### 3.2.1 Status
@@ -72,7 +72,6 @@ The UI is supplied externally by the PCM and has no onboard voltage regulator.
 When the PCM detects a malfunction, an error or warning code will be sent to the UI which displays this code in binary format using the 4 indicator LEDs. Therefore 16 different errors or warning can be displayed which are differentiated by the colour of the RGB led. Yellow indicates that a warning has occurred while red means an error has occurred. 
 
 ![UI LED indicator](UI_LED_indicator.png)
-<div class="page-break" style="page-break-before: always;"></div>
 
 The following error codes can be currently displayed on the UI: 
 
@@ -92,7 +91,6 @@ The following error codes can be currently displayed on the UI:
 | 12   | ERROR_BAT_PRE_CHARGE            |                                                                                  |
 | 13   | ERROR_COMMUNICATION_UI_EXT      |                                                                                  |
 | 14   | ERROR_MPPT_INPUT_OVERCURRENT_PF |                                                                                  |
-<div class="page-break" style="page-break-before: always;"></div>
 
 The following warning codes can be currently displayed on the UI: 
 

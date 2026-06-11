@@ -18,7 +18,6 @@ For the physical layer RS485 is used. On top of this Layer Modbus RTU is impleme
 | Current          | A    | Battery Current                        |
 | Charge           | mAh  | Current state of charge                |
 | NMOS Temperature | °C   | Temperature of the ON/OFF Transistors  |
-<div class="page-break" style="page-break-before: always;"></div>
 
 ## 5.3 FEATURE DESCRIPTION 
 ### 5.3.1 Waking up / entering sleep mode

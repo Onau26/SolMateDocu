@@ -14,7 +14,6 @@ The PCM is responsible for controlling all components present in the system incl
 | Current of Common Terminal | I<sub>Com</sub>      | 0   |     | 40   | A    |
 | Ongrid Power Sense         | P<sub>ongrid</sub>   | 0   |     | 1600 | W    |
 | FAN Voltage                | V<sub>FAN</sub>      |     | 5   |      | V    |
-<div class="page-break" style="page-break-before: always;"></div>
 
 ## 4.2 COMMUNICATION
 For the physical layer RS485 is used. On top of this Layer Modbus RTU is implemented which is a protocol which has been standardized for industrial applications.
@@ -30,7 +29,7 @@ The following parameters can be written/read using this communication.
 | Fan 2          | RPM  | rpm Speed of Fan 2                     |
 
 The Status and Error fields are containing bits which give more information about the system. 
-<div class="page-break" style="page-break-before: always;"></div>
+
 
 ### 4.2.1 Status
 
@@ -47,6 +46,7 @@ The Status and Error fields are containing bits which give more information abou
 | 8   | Not implemented   | Not implemented                                                                                                                                   |
 | 9   | Battery Low       | Battery SOC is low → Inverters have been disabled                                                                                                 |
 | 10  | Min Charge Limit  | The minimum SOC has been reached → Inverters have been disabled                                                                                   |
+
 ### 4.2.2 Error
 
 | Bit | Short Description      | Description                                                                 |
@@ -57,7 +57,6 @@ The Status and Error fields are containing bits which give more information abou
 | 3   | Current Limit Internal | The maximum allowed current for the internal battery pack has been exceeded |
 | 4   | ADC Malfunction        | The 16bit Sigma-Delta ADC is not sampling correctly                         |
 | 5   | EEPROM                 | Communication with EEPROM can’t be established                              |
-<div class="page-break" style="page-break-before: always;"></div>
 
 ## 4.3 FEATURE DESCRIPTION
 ### 4.3.1 Compute Module 4
@@ -72,7 +71,7 @@ The 32.768 kHz crystal is a standard clock crystal with an accuracy of +/- 20ppm
 
 ### 4.3.3 EEPROM 
 An onboard 16k EEPROM is used to store data like operating status, battery charge level, inverter total power and verakey. Data will be written from the flash memory of the PIC MCU to the EPPROM when the 5V supply rail drops below 4.5V and will be read back during the starting sequence of the MCU. 
-<div class="page-break" style="page-break-before: always;"></div>
+
 
 ### 4.3.4 FAN Control 
 The PCM is able to control two fans. While both fans will have the same target speed, the actual speed can be read separately for both fans and is used to detect malfunctions.
@@ -90,7 +89,7 @@ Readings The PCM has an onboard 16bit Sigma-Delta ADC which constantly monitors 
 Unlike in previous versions, the CAM switch is now only responsible for switching the external ac plug between the Offgrid inverter and the Wieland connector at the back. 
 The position of the CAM switch will be sensed by the three wires which are only signal wires and don’t commutate any significant current. The PCM detects the current switch position and enables or disables the inverters accordingly. 
 **Please Note:** The position of the CAM switch only selects the injection mode and doesn’t switch the inverters directly. The power management implemented on the PCM decides if the inverter can be switched on according to the charging state of the battery. 
-<div class="page-break" style="page-break-before: always;"></div>
+
 
 ### 4.3.9 Offgrid Inverter Switch
 The offgrid inverter will be turned on/off by shorting the two wires which are normally connected to a DIP switch. This essentially connects the 48V battery voltage to the logic supply of the inverter which results in the inverter powering on. 
@@ -99,7 +98,7 @@ The offgrid inverter will be turned on/off by shorting the two wires which are n
 The Power Control Module features a redundant power supply which means the PCB can be powered either by the Meanwell AC/DC power supply or by the 48V DC supply. Switching between these two supplies is handled by a dedicated power management IC from Texas Instruments. 
 The supply of higher priority is the 15-20W AC/DC Meanwell (primary) power supply. When this supply is not present (e.g. in case of a blackout) the power management IC automatically switches to the 5V buck converter (secondary supply). This buck converter can be supplied from either the internal battery, the external battery or by the output of the MPPT. Out of these three voltage sources, the supply with the higher voltage will be used. 
 The switchover between then main supply and the secondary supply is seamless which means the system does not notice that the power source has been switched and no brownout reset / restart will be triggered. 
-<div class="page-break" style="page-break-before: always;"></div>
+
 
 ### 4.3.11 Power Management
 Power management of the components connect to the battery is the most critical part handled by the PCM because of its direct impact on battery health and lifetime. To ensure the longest battery lifetime possible, the power management currently uses only 85% of the usable capacity of the battery to leave some safety margin for the degradation the battery and to avoid operating the battery at low capacity. The power management has been implemented in 3 steps: 
