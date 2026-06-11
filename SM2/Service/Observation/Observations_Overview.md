@@ -1,5 +1,5 @@
 
-| [Boost Injection not working](Boost_Injection_not_working.md) |
+| Overview                                                      |
 | ------------------------------------------------------------- |
 | [Button is Stuck](Button_is_Stuck.md)                         |
 | [CAM Switch brocken](CAM_Switch_brocken.md)                   |
@@ -12,4 +12,5 @@
 | [SM Doesn't Start](SM_Doesn't_Start.md)                       |
 | [Stuck in Boot animation](Stuck_in_Boot_animation.md)         |
 | [UI Error Code](UI_Error_Code.md)                             |
+| [Boost Injection not working](Boost_Injection_not_working.md) |
 
