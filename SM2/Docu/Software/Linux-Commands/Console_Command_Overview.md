@@ -2,7 +2,7 @@
 | Overview                                               |
 | ------------------------------------------------------ |
 | [Invertercontrol Log](Invertercontrol_Log)             |
-| [Manually Configure WLAN](Manually_Configure_WLAN)     |
+| [Manually Configure WLAN](Manually_Configure_WLAN.md)     |
 | [Manually Disable WLAN](Manually_Disable_WLAN)         |
 | [Manually Reset Components](Manually_Reset_Components) |
 | [PCM Realtime Data](PCM_Realtime_Data)                 |
