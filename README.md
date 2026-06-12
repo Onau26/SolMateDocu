@@ -14,4 +14,5 @@ Public Solmate Documentation Testing for Github Pages
 | [OnGrid](./SM2/Docu/Hardware/OnGrid/OnGrid_Docu.md)                      |                                                                                    |                                                                                 |
 | [PCM](./SM2/Docu/Hardware/PCM/PCM_Docu.md)                               |                                                                                    |                                                                                 |
 | [UI](./SM2/Docu/Hardware/UI/UI_Docu.md)                                  |                                                                                    |                                                                                 |
+| [Wiring](./SM2/Docu/Hardware/Wiring/Wiring_Overview.md)                  |                                                                                    |                                                                                 |
 

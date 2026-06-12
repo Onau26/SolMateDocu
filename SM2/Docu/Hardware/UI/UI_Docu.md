@@ -7,7 +7,7 @@ The UI is now powered by an MCU from Microchip which enables independent operati
 
 The UI is now also able to display error and warning codes which should help the user to identify problems in case of a malfunction. 
 
-![UI PCB](UI_PCB.png)
+![UI PCB](../Images/UI_PCB.png)
 
 ## 3.1 ELECTRICAL CHARACTERISTICS
 
@@ -71,7 +71,7 @@ The UI is supplied externally by the PCM and has no onboard voltage regulator.
 
 When the PCM detects a malfunction, an error or warning code will be sent to the UI which displays this code in binary format using the 4 indicator LEDs. Therefore 16 different errors or warning can be displayed which are differentiated by the colour of the RGB led. Yellow indicates that a warning has occurred while red means an error has occurred. 
 
-![UI LED indicator](UI_LED_indicator.png)
+![UI LED indicator](../Images/UI_LED_indicator.png)
 
 The following error codes can be currently displayed on the UI: 
 
