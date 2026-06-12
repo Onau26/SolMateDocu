@@ -1,6 +1,6 @@
 # 5 BATTERY
 The battery is the main storage component in the SolMate system and has a rated capacity of 25Ah or 30Ah. Main supplier will be Topband Batteries. 
-![Topband Battery](Topband_Battery.png)
+![Topband Battery](./Images/Topband_Battery.png)
 
 ## 5.1 ELECTRICAL CHARACTERISTICS 
 For detailed information about the electrical characteristics and communication capabilities, please refer to the datasheet of the individual battery. 
