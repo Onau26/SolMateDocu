@@ -23,5 +23,5 @@
 <a href="onau26.github.io/SolMateDocu/DocuDump/SM2/BOM/Images/EOL_workinstruction_sm205_draft.pdf" target="_blank">PDF.</a>
 
 
-<a href="Images/EOL_workinstruction_sm205_draft.pdf" target="_blank">PDF.</a>
+<a href="Images/EOL_workinstruction_sm205_draft.pdf" target="_blank">Workinstruction.</a>
 
