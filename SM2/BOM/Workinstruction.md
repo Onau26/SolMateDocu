@@ -6,5 +6,13 @@
 </object>
 
 
+<embed src="[http://example.com/the.pdf](https://github.com/Onau26/SolMateDocu/blob/DocuDump/SM2/BOM/Images/EOL_workinstruction_sm205_draft.pdf)" width="500" height="375" 
+ type="application/pdf">
+
+
+<embed src="[http://example.com/the.pdf](https://github.com/Onau26/SolMateDocu/tree/DocuDump/SM2/BOM/Images/EOL_workinstruction_sm205_draft.pdf)" width="500" height="375" 
+ type="application/pdf">
+
+
 
 ![pdf](./Images/EOL_workinstruction_sm205_draft.pdf)
