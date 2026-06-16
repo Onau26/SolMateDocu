@@ -1,9 +1,10 @@
 
-<object data="[pdf](./Images/EOL_workinstruction_sm205_draft.pdf)" type="application/pdf" width="700px" height="700px">
-    <embed src="[pdf](./Images/EOL_workinstruction_sm205_draft.pdf)">
-        <p>This browser does not support PDFs. Please download the PDF to view it: <a href="[pdf](./Images/EOL_workinstruction_sm205_draft.pdf)">Download PDF</a>.</p>
+<object data="[pdf](onau26.github.io/SolMateDocu/DocuDump/SM2/BOM/Images/EOL_workinstruction_sm205_draft.pdf)" type="application/pdf" width="700px" height="700px">
+    <embed src="[pdf](onau26.github.io/SolMateDocu/DocuDump/SM2/BOM/Images/EOL_workinstruction_sm205_draft.pdf)">
+        <p>This browser does not support PDFs. Please download the PDF to view it: <a href="[pdf](onau26.github.io/SolMateDocu/DocuDump/SM2/BOM/Images/EOL_workinstruction_sm205_draft.pdf)">Download PDF</a>.</p>
     </embed>
 </object>
+
 
 
 
@@ -21,9 +22,6 @@
 
 <a href="onau26.github.io/SolMateDocu/DocuDump/SM2/BOM/Images/EOL_workinstruction_sm205_draft.pdf" target="_blank">PDF.</a>
 
+
 <a href="Images/EOL_workinstruction_sm205_draft.pdf" target="_blank">PDF.</a>
 
-
-
-
-![pdf](./Images/EOL_workinstruction_sm205_draft.pdf)
