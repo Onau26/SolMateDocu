@@ -10,14 +10,14 @@ For detailed information about the electrical characteristics and communication 
 ## 5.2 COMMUNICATION 
 For the physical layer RS485 is used. On top of this Layer Modbus RTU is implemented which is a protocol which has been standardized for industrial applications. Communication speed is 9600 kbit/s, the PCM acts as the master and is responsible for starting transmissions. The following parameters can be written/read using this communication. 
 
-| Parameter        | Unit | Description                            |
-| ---------------- | ---- | -------------------------------------- |
-| Status           |      | Indication the status                  |
-| Error            |      | Indicates errors                       |
-| Voltage          | V    | Stack Voltage                          |
-| Current          | A    | Battery Current                        |
-| Charge           | mAh  | Current state of charge                |
-| NMOS Temperature | °C   | Temperature of the ON/OFF Transistors  |
+| Parameter        | Unit | Description                           |
+| ---------------- | ---- | ------------------------------------- |
+| Status           |      | Indication the status                 |
+| Error            |      | Indicates errors                      |
+| Voltage          | V    | Stack Voltage                         |
+| Current          | A    | Battery Current                       |
+| Charge           | mAh  | Current state of charge               |
+| NMOS Temperature | °C   | Temperature of the ON/OFF Transistors |
 
 ## 5.3 FEATURE DESCRIPTION 
 ### 5.3.1 Waking up / entering sleep mode
