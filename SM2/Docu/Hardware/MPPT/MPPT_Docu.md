@@ -3,7 +3,8 @@
 
 The MPPT in the SolMate system is used for power conversion and steps up the DC-input voltage of the PV panels to a higher voltage needed to charge a battery. The new MPPT consists of two individual inputs with two phase each, leading to a total of 4 phases. Each phase consists of one synchronous boost converter capable of an output power of around 300W. For switching, Gallium Nitride High Electron Mobility Transistors (GaN HEMTs) are used which allow to increase the power density while maintaining industry leading efficiency.
 
-![MPPT](MPPT_PCB.png) 
+
+![MPPT](../Images/MPPT_PCB.png) 
 
 ## 2.1 ELECTRICAL CHARACTERISTICS 
 
@@ -73,7 +74,7 @@ The MPPT has two separate inputs which allows to connect two separate strings of
 ### 2.3.2 MPP Tracking 
 The MPP tries to find the maximum power point at the DC-input side by constantly varying the input current and observing the resulting input power. The algorithm is shown below. 
 
-![MPPT Tracking](MPPT_Tracking.png)
+![MPPT Tracking](../Images/MPPT_Tracking.png)
 
 
 For most of the PV panels, the maximum power point is around 31V.
@@ -98,7 +99,7 @@ The battery is interpreted as full and the MPPT is disabled when the output curr
 
 <sup>3</sup> The minimum output current is 0.2A 
 
-![Charging Stategy](Charging_Strategy.png)
+![Charging Stategy](../Images/Charging_Strategy.png)
 
 The battery full state is exited according to this state diagram. 
 This charging strategy gives the cells more time to balance when the battery is nearly full and prevents the battery from being overcharged. Additionally, there is a small hysteresis when the battery is full and stops charging before the MPPT resumes normal operation. 
