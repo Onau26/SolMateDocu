@@ -1,123 +1,201 @@
-
 # MAXIMUM POWER POINT TRACKER
 
-The MPPT in the SolMate system is used for power conversion and steps up the DC-input voltage of the PV panels to a higher voltage needed to charge a battery. The new MPPT consists of two individual inputs with two phase each, leading to a total of 4 phases. Each phase consists of one synchronous boost converter capable of an output power of around 300W. For switching, Gallium Nitride High Electron Mobility Transistors (GaN HEMTs) are used which allow to increase the power density while maintaining industry leading efficiency.
+The MPPT in the SolMate system is used for power conversion. It boosts the DC input voltage of the PV panels to the higher DC voltage required to charge the battery. The GaN MPPT has two independent PV inputs. Each input uses two interleaved synchronous boost phases, for a total of four phases. Gallium Nitride High Electron Mobility Transistors (GaN HEMTs) are used for the switching stages to increase power density while maintaining high efficiency.
 
+The firmware controls both PV inputs independently, but exposes one shared communication interface and one shared output voltage/current limit for the complete converter.
 
-![MPPT](../Images/MPPT_PCB.png) 
+![MPPT](../Images/MPPT_PCB.png)
 
-## 2.1 ELECTRICAL CHARACTERISTICS 
+## 2.1 ELECTRICAL CHARACTERISTICS
 
 | Parameter                 | Symbol                 | Min | Typ | Max       | Unit |
 | :------------------------ | :--------------------- | :-- | :-- | :-------- | :--- |
-| Input Voltage             | V<sub>in</sub>         | 6   | 32  | 65 <sup>1 | V    |
-| Output Voltage            | V<sub>out</sub>        |     | 48  | 60        | V    |
-| Input Current (per Phase) | I<sub>in</sub> (Phase) | 0   |     | 20        | A    |
-| Input Current (total)     | I<sub>ln</sub> max     | 0   |     | 40 <sup>2 | A    |
-| Output Current            | I<sub>out</sub>        | 0   |     | 28        | A    |
-| Operating Temperature     | T<sub>op</sub>         | -20 |     | 100       | °C   |
-| Efficiency                | 𝜂                     |     |     | 98        | %    |
-| Switching Frequency       | fsw                    |     | 500 |           | kHz  |
-| FAN Voltage               | V<sub>FAN</sub>        |     | 5   |           | V    |
+| Input Voltage             | V<sub>in</sub>         | 6   | 32  | 65 <sup>1</sup> | V |
+| Output Voltage            | V<sub>out</sub>        |     | 48  | 60        | V |
+| Input Current (per Input) | I<sub>in</sub>         | 0   |     | 20        | A |
+| Input Current (total)     | I<sub>in,total</sub>   | 0   |     | 40 <sup>2</sup> | A |
+| Output Current            | I<sub>out</sub>        | 0   |     | 28 <sup>3</sup> | A |
+| Operating Temperature     | T<sub>op</sub>         | -20 |     | 100       | deg C |
+| Efficiency                | eta                    |     |     | 98        | % |
+| Switching Frequency       | f<sub>sw</sub>         |     | 500 |           | kHz |
+| Fan Voltage               | V<sub>FAN</sub>        |     | 5   |           | V |
+| RS485 Baud Rate           |                        |     | 9600 |          | bit/s |
 
-<sup>1</sup> Maximum voltage which can be handled by Hardware, the overall input voltage must not exceed battery voltage.  
-<sup>2</sup> May be limited due to thermal limitations.
+<sup>1</sup> Maximum voltage which can be handled by hardware. During operation the PV input voltage must not exceed the battery/output voltage.<br>
+<sup>2</sup> May be reduced by firmware current limiting or thermal derating.<br>
+<sup>3</sup> Hardware capability. The firmware default output current limit is 15 A.
 
-## 2.2 COMMUNICATION 
+## 2.2 COMMUNICATION
 
-For the physical layer RS485 is used. On top of this Layer Modbus RTU is implemented which is a protocol which has been standardized for industrial applications. Communication speed is 9600 kbit/s, the default address of the MPPT is 0x05. The following parameters can be written/read using this communication.
+The physical layer is RS485. The application layer is Modbus RTU. The default slave address of the MPPT is `0x05`; the firmware also uses `0x15` as its master-side address when it initiates a transaction. UART configuration is 9600 bit/s, 8 data bits, 1 stop bit. CRC16 is used according to Modbus RTU.
 
-| Parameter          | Unit | Description                                |
-| ------------------ | ---- | ------------------------------------------ |
-| Status             |      | Indicates the status                       |
-| Error              |      | Indicates errors                           |
-| Temperature (x4)   | °C   | emperature of each individual power stage  |
-| Output Voltage     | V    | Voltage measured at the output of the MPPT |
-| Input Voltage (x2) | V    | Voltage measured at each input             |
-| Input Current (x2) | A    | Current measured at each input             |
-| Output Current     | A    | Current measured at the output             |
-| Fan Speed          | rpm  | Speed of the FAN                           |
- 
-The Status and Error fields are containing bits which give more information about the system. 
+Supported function codes:
 
-### 2.2.1 Status Byte Bit Description
+| Function Code | Function                 |
+| ------------- | ------------------------ |
+| `0x03`        | Read holding registers   |
+| `0x10`        | Write multiple registers |
 
-| Bit |                          | Description                                                                      |
-| --- | ------------------------ | -------------------------------------------------------------------------------- |
-| 0   | Enabled                  | The MPPT has been disabled by Software (Active Low)                              |
-| 1   | Tracking                 | Maximum Power Point Tracking is enabled (Active High)                            |
-| 2   |                          | Not implemented                                                                  |
-| 3   | Battery Full             | Charging has been stopped since the battery has reached its charging end voltage |
-| 4   | Smart Charging           | The MPPT has reduced charge current since the battery is reaching 100%           |
-| 5   | Low Battery Derating     | he stack voltage of the battery is very low → charging current is reduced        |
-| 6   | Low Temperature Derating | The temperature of the battery is very low → charging current is reduced         |
+The firmware exposes the `MPPCom` structure directly over Modbus. The low byte of the Modbus start address is interpreted as a byte offset into this structure. Multi-byte values are transferred in the MCU memory order. Values are unsigned unless explicitly marked as signed.
 
-### 2.2.2 Error Byte Bit Description
+### 2.2.1 Register Map
 
-| Bit |                   | Description                                              |
-| --- | ----------------- | -------------------------------------------------------- |
-| 0   | Communication     | A communication error occurred                           |
-| 1   | Temperature Limit | The maximum allowed temperature rating has been exceeded |
-| 2   | Overvoltage       | The maximum allowed input voltage has been exceeded      |
-| 3   | Overcurrent       | The maximum allowed input current has been exceeded      |
-| 4   | Reverse Polarity  | The input polarity is in reverse                         |
+| Byte Offset | Size | Access | Parameter             | Unit / Scaling | Description |
+| ----------- | ---- | ------ | --------------------- | -------------- | ----------- |
+| 0           | 2    | R/W    | Status flags          | bit field      | MPPT command and state flags |
+| 2           | 2    | R/W    | Error flags           | bit field      | Latched and active error flags |
+| 4           | 8    | R      | Temperature 1..4      | signed 0.1 deg C | Temperature of the four power stages |
+| 12          | 2    | R      | Output voltage        | mV             | Battery/output voltage |
+| 14          | 4    | R      | Input voltage 1..2    | mV             | PV input voltages |
+| 18          | 4    | R      | Input current 1..2    | mA             | PV input currents |
+| 22          | 2    | R      | Output current        | mA             | Battery/output current |
+| 24          | 4    | R      | Dynamic input current limit | mA       | Firmware currently reports the calculated total input current limit here; accumulated energy counting is disabled in the current firmware |
+| 28          | 2    | R      | Fan speed             | rpm            | Fan tachometer speed |
+| 30          | 2    | R      | Hardware version      | raw            | ADC-derived hardware revision |
+| 32          | 2    | R/W    | Output current limit  | mA             | Default is 15000 mA |
+| 34          | 2    | R/W    | Input 1 voltage setpoint | mV          | Used when MPP tracking is disabled |
+| 36          | 2    | R/W    | Input 2 voltage setpoint | mV          | Used when MPP tracking is disabled |
+| 38          | 2    | R/W    | Manual fan command    | signed %       | `-1` enables automatic fan control; `0..100` sets fan PWM manually |
 
+Firmware write protection only accepts write accesses to the status/error area and to the writable command fields from byte offset 32 onward, with a maximum write length of two Modbus registers per request. The defined writable command fields end at byte offset 39. Other write requests are rejected with Modbus exception code `0x02`.
 
-**Note:** Every error condition leads to the MPP shutting down and halting operation until error condition is removed and the system has been restarted. 
+### 2.2.2 Status Bit Description
+
+| Bit | Name                    | Description |
+| --- | ----------------------- | ----------- |
+| 0   | Enabled                 | Enables converter operation when set. Clearing this bit disables both PV inputs. |
+| 1   | Tracking                | Enables MPP tracking when set. When cleared, `vin1_set` and `vin2_set` are used as fixed input voltage targets. |
+| 2   | Floating Charge         | Set by firmware after leaving battery-full state and entering the floating-charge hysteresis region. |
+| 3   | Battery Full            | Charging is stopped because the output voltage is at the charging limit and output current is below 0.5 A. |
+| 4   | Smart Charging          | Set by the PCM to reduce charging thresholds near high battery SOC. |
+| 5   | Low Battery Derating    | Reserved in the current firmware. The low-battery derating code is present but disabled. |
+| 6   | Low Temperature Derating | Reserved for battery low-temperature derating. Not implemented in the current MPPT firmware. |
+
+### 2.2.3 Error Bit Description
+
+| Bit | Name                  | Description |
+| --- | --------------------- | ----------- |
+| 0   | Communication         | Reserved for communication errors. |
+| 1   | Temperature Limit     | Maximum converter temperature exceeded. |
+| 2   | Overvoltage           | Input overvoltage or PWM fault event detected. |
+| 3   | Overcurrent           | Hardware current-limit event detected by the PWM peripheral. |
+| 4   | Reverse Polarity      | Input reverse-polarity condition detected. |
+| 5   | Incorrect FW Version  | Firmware does not match the detected hardware revision. |
+| 6   | Permanent OC Fault    | Repeated overcurrent faults exceeded the retry limit. |
+| 7   | Supply                | 5 V supply-good signal missing while PV or output voltage is present. |
+| 8   | Transistor            | Low-side transistor fault suspected. |
+
+Any active error disables converter operation. Some error bits recover automatically after the fault condition is removed; repeated overcurrent and suspected transistor faults can remain latched for up to 12 h.
 
 ## 2.3 FEATURE DESCRIPTION
-For correct operation, several features have been implemented. 
+
+For correct operation, several firmware and hardware protection features have been implemented.
 
 ### 2.3.1 Multiple Inputs
-The MPPT has two separate inputs which allows to connect two separate strings of PV panels. Each input supports up to 20 A which leads to a total input power of 600 W per input or 1200 W in total. To use the MPPT as efficient as possible, both inputs should be balanced which means that an equal number of panels are connect to each input. Possible configurations are therefore 1x1, 2x2 or 3x3 panels. Since each input is limited to 20 A, overloading an input is not possible but efficiency will decrease if the input is not properly balanced.
 
-### 2.3.2 MPP Tracking 
-The MPP tries to find the maximum power point at the DC-input side by constantly varying the input current and observing the resulting input power. The algorithm is shown below. 
+The MPPT has two separate PV inputs, allowing two separate strings of PV panels to be connected. Each input supports up to 20 A, for a total input current of up to 40 A. To use the MPPT efficiently, both inputs should be balanced with the same number and type of panels where possible. Typical configurations are therefore 1x1, 2x2 or 3x3 panels.
+
+Each input starts with one boost phase active. The second phase of an input is enabled when that input current rises above 6 A and is disabled again below 4 A. This improves low-power efficiency while still allowing both phases to share current at higher power.
+
+### 2.3.2 MPP Tracking
+
+The MPPT tries to find the maximum power point on the DC input side by varying the input voltage target and observing the resulting input power.
 
 ![MPPT Tracking](../Images/MPPT_Tracking.png)
 
+The implemented firmware uses local perturb-and-observe tracking for each PV input:
 
-For most of the PV panels, the maximum power point is around 31V.
-When a power supply is connected at the input instead of a PV module, the MPP will steadily increase the input power until the maximum input current of 20A per phase is reached. 
+- Input power is calculated from measured PV voltage and PV current.
+- The voltage target is changed in 50 mV steps.
+- The target voltage is limited to the range 10 V to 60 V.
+- If the dynamic current limit is active, tracking is suspended and the current input voltage is held as the target.
 
-**Please Note:** 
-This algorithm only searches the local maximum power point. In case of partial shadowing, the global maximum power point may be different from the local maximum power point.
+The firmware also contains code for periodic full-panel scans from open-circuit voltage down to 10 V, but this scan mode is currently disabled. Therefore the active firmware tracks the local maximum power point. In partial shading conditions the global maximum power point may differ from the local point.
 
-### 2.3.3 Temperature Limit
-To protect the MPPT against thermal overload, input current foldback has been implemented. If the temperature of the MPPT reaches 90°C, the input power will be reduced to stay under this limit. When there is no malfunction (like a shorted FET), the MPP will never reach a temperature above 100°C since the input current would be reduced to 0A beforehand. If the temperature exceeds 100°C, the MPPT will shut down and an error warning will be displayed. 
+When a laboratory power supply is connected instead of a PV module, the MPPT will increase input power until a voltage, current, output-voltage or thermal limit is reached.
 
-### 2.3.4 Overcurrent Protection 
-Each individual phase has its own overcurrent protection implemented in hardware. This turns off the MPPT in case of shorts at the input or the output and protects the MPPT from damage.
+### 2.3.3 Converter Enable Conditions
 
-### 2.3.5 Fan Control 
-The MPPT has the control over its own fan, can set the speed via PWM as well as measure the speed. The fans will be controlled in dependence of the temperature of the device.
+A PV input is enabled only when all of the following conditions are true:
 
-### 2.3.6 Charging Strategy 
-When the output voltage of the MPPT (i.e. the battery voltage) reaches the charging end voltage (which by default is 52.5V), the converter enters into constant voltage charging mode where the output voltage is kept constant and the current will adjust accordingly<sup>3</sup> .
-Additionally, the PCM can set the “smart charging” bit on the MPP which reduces the constant voltage charging threshold to 51.2V. This bit will be set when the battery is getting full i.e. the SOC is greater than 90% or the “cell overvoltage” bit is set by the BMS. This mode is maintained until the SOC is below 85% or the “cell overvoltage” bit has been de-asserted.
-The battery is interpreted as full and the MPPT is disabled when the output current is smaller than 0.5A and the output voltage is greater than 52V. The full charging cycle is shown below. 
+- PV input voltage is at least 10 V after the input has been present for more than 12 s.
+- The 5 V power-good signal is present.
+- The global enabled status bit is set.
+- Battery-full state is not active.
+- No error bit is set.
+- The output voltage has not changed by more than 2 V between control cycles.
 
-<sup>3</sup> The minimum output current is 0.2A 
+If the PV voltage drops below 8 V, the input is disabled and the converter can enter low-power mode when both inputs are inactive.
 
-![Charging Stategy](../Images/Charging_Strategy.png)
+### 2.3.4 Temperature Limit and Fan Control
 
-The battery full state is exited according to this state diagram. 
-This charging strategy gives the cells more time to balance when the battery is nearly full and prevents the battery from being overcharged. Additionally, there is a small hysteresis when the battery is full and stops charging before the MPPT resumes normal operation. 
-In case the battery voltage is low, charging current will be reduced until the battery voltage has risen to a save level again. This is done by linearly increasing the output current from 0.1C (41 V) to 0.5C (46 V). In low temperature environments, charging current is reduced to 0.1C to avoid crystallization of lithium ions. 
+The MPPT measures four power-stage temperatures. Each PV input uses the maximum temperature of its two associated power stages for derating.
 
-### 2.3.7 Power Supply 
-The MPPT will be supplied by the output voltage of the converter or the PCM in case the battery has shut down and mains is connected to the PCM. 
-The source of higher priority is the converters output voltage, when this voltage is below 6V, the Gate drivers of the power stages will get turned off and the supply logic automatically switches to the 3.3V supply provided by the PCM. This allows to keep the communication between MPP and PCM active even when the battery and PV voltages are 0V.
+Input current derating starts at 70 deg C and reaches its minimum at 80 deg C. If the maximum measured converter temperature exceeds 100 deg C, the firmware disables the converter, sets the temperature-limit error bit and performs an emergency PWM shutdown.
 
-### 2.3.8 Input Overvoltage 
-Detection Input overvoltage can occur when PV panels are connected in series, exceeding the maximum allowed voltage of the system. In general, the input voltage must not exceed the battery voltage, otherwise current starts to flow through the body diodes of the transistors, charging the battery uncontrollable.
-This can cause damage to the battery or, in case the battery shuts down, to the complete system. 
-The MPPT detects input overvoltage events when the input voltage exceeds the output voltage and is greater than 50V while an output current to the battery can be measured. In this case, an error bit will be set and the UI displays an error code.
+The fan is controlled from the maximum measured converter temperature:
 
-### 2.3.9 Input Reverse Polarity 
-If PV panels are connected in reverse polarity, current starts to flow through the body diode of the low-side transistors. This causes excessive power loss and results in thermal damage to the system. 
-Reverse polarity is detected by checking if the measured input voltage is exactly 0V<sup>4</sup> and the temperature rises above 70°C. In this case, an error bit will be set and the UI issues an error code.
-Additionally, the low-side MOSFET is turned-on completely which shorts the input and reduces power loss, thereby protecting the MPPT from damage. 
-The MPPT recovers from this state when the PV input connector is disconnected and connected again.
+| Temperature | Fan Command |
+| ----------- | ----------- |
+| <= 40 deg C | 0 % |
+| 40..60 deg C | Linear ramp from 0 % to 100 % |
+| >= 60 deg C | 100 % |
 
-<sup>4</sup>Minimum voltage which can be measured by the system, real voltage has negative sign
+The fan command can be overridden through the `manual_fan_speed` Modbus field. Set this field to `-1` to return to automatic control.
+
+### 2.3.5 Overcurrent Protection
+
+Each phase has hardware current-limit protection through the PWM peripheral. If a current-limit event occurs while the phase is active, the firmware sets the overcurrent error bit and performs an emergency shutdown of all PWM outputs.
+
+The firmware attempts automatic recovery from overcurrent faults after 60 s. After three overcurrent occurrences, the permanent overcurrent fault bit is set. This retry counter is reset after 12 h without additional overcurrent events.
+
+### 2.3.6 Charging Strategy
+
+The MPPT limits charging based on output voltage and output current.
+
+![Charging Strategy](../Images/Charging_Strategy.png)
+
+Default charging thresholds:
+
+| Mode | Current-Derating Voltage | Battery-Full Voltage Limit |
+| ---- | ------------------------ | -------------------------- |
+| Normal charging | 52.5 V | 53.0 V |
+| Smart charging | 51.2 V | 52.0 V |
+
+The PCM can set the smart-charging status bit when the battery is near full, for example when SOC is high or the BMS reports cell overvoltage. In smart-charging mode, the MPPT reduces the voltage thresholds shown above.
+
+Battery-full state is entered when the output voltage is at or above the active voltage limit and output current is below 0.5 A. While battery-full is active, the current derating factor is driven to zero and both PV inputs are disabled.
+
+The battery-full state is released when the output voltage falls below the active voltage limit minus 1.2 V. The firmware then sets floating-charge state. Floating-charge state is cleared when output voltage falls below the active voltage limit minus 1.8 V.
+
+The firmware contains low-battery derating constants for a 44 V to 47 V ramp, but this code path is disabled in the current firmware build.
+
+### 2.3.7 Power Supply
+
+The MPPT is supplied by the converter output voltage during normal operation. If the battery has shut down and mains is connected to the PCM, the MPPT logic can also be supplied by the PCM-side 3.3 V rail so communication remains active even when battery and PV voltages are 0 V.
+
+The firmware also monitors the 5 V power-good signal. If PV or output voltage is present and the 5 V power-good signal is missing, the supply error bit is set and converter operation is inhibited.
+
+### 2.3.8 Input Overvoltage
+
+Input overvoltage can occur when PV panels are connected in series and exceed the allowed operating voltage of the system. In normal operation the PV input voltage must not exceed the battery/output voltage. If it does, current can flow through transistor body diodes and charge the battery uncontrollably.
+
+The firmware detects an input overvoltage event when all of these conditions are true:
+
+- PV input voltage is greater than the output voltage.
+- PV input voltage is greater than 47 V.
+- Output current is greater than 0.5 A.
+
+When this condition is detected, the overvoltage error bit is set. The firmware then periodically performs a slow low-side shorting action to pull down the input in a controlled way. The error is released after the input current remains below 0.15 A for the release timeout.
+
+### 2.3.9 Input Reverse Polarity
+
+If PV panels are connected with reverse polarity, current can flow through the low-side transistor body diodes. This causes excessive power loss and can thermally damage the system.
+
+The firmware detects reverse polarity when the measured input voltage is 0 V and the corresponding input power-stage temperature rises above 70 deg C. In this condition the reverse-polarity error bit is set and the low-side MOSFETs are slowly turned on to reduce the power loss path.
+
+The reverse-polarity state is released when the measured input voltage rises above 1 V or the input current rises above 0.2 A, which normally requires disconnecting and reconnecting the PV input correctly.
+
+### 2.3.10 Firmware and Hardware Compatibility
+
+At startup the firmware reads the hardware revision through the ADC revision input. The current firmware enables converter operation only when the detected hardware revision matches `ADC_HW_REV_100`. If a different hardware revision is detected, the MPPT clears the enabled bit and sets the incorrect-firmware-version error bit.
