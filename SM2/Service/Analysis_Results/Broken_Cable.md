@@ -1,0 +1,1 @@
+Some cable, connected to the malfunctioning component is damaged in any way.

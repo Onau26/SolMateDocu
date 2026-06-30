@@ -1,12 +1,15 @@
 
-| Overview                                       |
-| ---------------------------------------------- |
-| [Brocken Cable Harness](Brocken_Cable-Harness) |
-| [Brocken MPPT](Brocken_MPPT)                   |
-| [Brocken OffGrid](Brocken_OffGrid)             |
-| [Brocken OnGrid](Brocken_OnGrid)               |
-| [Brocken PCM](Brocken_PCM)                     |
-| [Brocken_UI](Brocken_UI)                       |
-| [Brocken Wiring](Brocken_Wiring)               |
+**General Instructions:** 
+lorem ipsum...
+
+| Overview                                        |
+| ----------------------------------------------- |
+| [Broken Cable Harness](Broken_Cable-Harness.md) |
+| [Broken MPPT](Broken_MPPT.md)                   |
+| [Broken OffGrid](Broken_OffGrid.md)             |
+| [Broken OnGrid](Broken_OnGrid.md)               |
+| [Broken PCM](Broken_PCM.md)                     |
+| [Broken_UI](Broken_UI.md)                       |
+| [Broken Wiring](Broken_Cable.md)                |
 
  
